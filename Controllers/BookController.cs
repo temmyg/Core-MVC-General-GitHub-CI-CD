@@ -15,8 +15,8 @@ namespace Core_MVC_General.Controllers
             return View();
         }
 
-        [Route("/book/{genre1}")]
-        public IActionResult AddBook(string genre1, Book book)
+        [Route("/book/{generalGenre}")]
+        public IActionResult AddBook(string generalGenre, Book book)
         {
 
             //if (genre != null && !books.ContainsKey(genre))
