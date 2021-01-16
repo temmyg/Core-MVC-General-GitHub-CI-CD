@@ -28,10 +28,10 @@ namespace Core_MVC_General.Controllers
             ///*
             // * Lazy Loading
             // */
-            //var launchCenters = dbContext.LaunchCenters;
-            //LaunchCenter lcent = launchCenters.First();
-            //ICollection<Staff> staff = lcent.Personnel;
-            //Staff charlie = staff.First(s => s.Name.Equals("Charlie"));
+            var launchCenters = dbContext.LaunchCenters;
+            LaunchCenter lcent = launchCenters.First();
+            ICollection<Staff> staff = lcent.Personnel;
+            Staff charlie = staff.First(s => s.Name.Equals("Charlie"));
 
             //Staff numberOneStaff = new Staff { Name = "Nathen", StaffID = 133, LaunchCenterID = "101" };
             ////var launchCentersWithPersonnel = context.LaunchCenters.Include<LaunchCenter>("Personnel");
