@@ -28,23 +28,23 @@ namespace Core_MVC_General.Controllers
             ///*
             // * Lazy Loading
             // */
-            //var launchCenters = dbContext.LaunchCenters;
-            //LaunchCenter lcent = launchCenters.First();
-            //ICollection<Staff> staff = lcent.Personnel;
-            //Staff charlie = staff.First(s => s.Name.Equals("Charlie"));
+            var launchCenters = dbContext.LaunchCenters;
+            LaunchCenter lcent = launchCenters.First();
+            ICollection<Staff> staff = lcent.Personnel;
+            Staff charlie = staff.First(s => s.Name.Equals("Charlie"));
 
-            //Staff numberOneStaff = new Staff { Name = "Nathen", StaffID = 133, LaunchCenterID = "101" };
+            Staff numberOneStaff = new Staff { Name = "Nathen", StaffID = 133, LaunchCenterID = "101" };
             ////var launchCentersWithPersonnel = context.LaunchCenters.Include<LaunchCenter>("Personnel");
 
             ///*
             // * Eager Loading
             // */
-            ////var launchCentersWithPersonnel = dbContext.LaunchCenters.Include(lc => lc.Personnel);
-            //var lcs = dbContext.LaunchCenters.Where(lc => lc.Commander.Equals("Jeck")).Include(lc => lc.Personnel);
-            //List<LaunchCenter> allCenters = lcs.ToList();
-            //LaunchCenter lc101 = lcs.First();
-            //return View(numberOneStaff);
-            return View();
+            var launchCentersWithPersonnel = dbContext.LaunchCenters.Include(lc => lc.Personnel);
+            var lcs = dbContext.LaunchCenters.Where(lc => lc.Commander.Equals("Jeck")).Include(lc => lc.Personnel);
+            List<LaunchCenter> allCenters = lcs.ToList();
+            LaunchCenter lc101 = lcs.First();
+            return View(numberOneStaff);
+            //return View();
         }
 
         public IActionResult Privacy()
