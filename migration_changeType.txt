@@ -1,0 +1,11 @@
+Build started...
+Build succeeded.
+System.InvalidOperationException: The migration 'changeLCID_Type' was not found.
+   at Microsoft.EntityFrameworkCore.Migrations.MigrationsAssemblyExtensions.GetMigrationId(IMigrationsAssembly assembly, String nameOrId)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.Migrator.GenerateScript(String fromMigration, String toMigration, Boolean idempotent)
+   at Microsoft.EntityFrameworkCore.Design.Internal.MigrationsOperations.ScriptMigration(String fromMigration, String toMigration, Boolean idempotent, String contextType)
+   at Microsoft.EntityFrameworkCore.Design.OperationExecutor.ScriptMigrationImpl(String fromMigration, String toMigration, Boolean idempotent, String contextType)
+   at Microsoft.EntityFrameworkCore.Design.OperationExecutor.ScriptMigration.<>c__DisplayClass0_0.<.ctor>b__0()
+   at Microsoft.EntityFrameworkCore.Design.OperationExecutor.OperationBase.<>c__DisplayClass3_0`1.<Execute>b__0()
+   at Microsoft.EntityFrameworkCore.Design.OperationExecutor.OperationBase.Execute(Action action)
+The migration 'changeLCID_Type' was not found.

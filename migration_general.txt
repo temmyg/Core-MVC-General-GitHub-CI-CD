@@ -1,0 +1,86 @@
+Build started...
+Build succeeded.
+IF OBJECT_ID(N'[__EFMigrationsHistory]') IS NULL
+BEGIN
+    CREATE TABLE [__EFMigrationsHistory] (
+        [MigrationId] nvarchar(150) NOT NULL,
+        [ProductVersion] nvarchar(32) NOT NULL,
+        CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+    );
+END;
+
+GO
+
+CREATE TABLE [LaunchCenter] (
+    [ID] nvarchar(450) NOT NULL,
+    [Commander] nvarchar(max) NULL,
+    CONSTRAINT [PK_LaunchCenter] PRIMARY KEY ([ID])
+);
+
+GO
+
+CREATE TABLE [Staff] (
+    [StaffID] int NOT NULL,
+    [Name] nvarchar(max) NULL,
+    [LaunchCenterID] nvarchar(450) NULL,
+    CONSTRAINT [PK_Staff] PRIMARY KEY ([StaffID]),
+    CONSTRAINT [FK_Staff_LaunchCenter_LaunchCenterID] FOREIGN KEY ([LaunchCenterID]) REFERENCES [LaunchCenter] ([ID]) ON DELETE NO ACTION
+);
+
+GO
+
+CREATE INDEX [IX_Staff_LaunchCenterID] ON [Staff] ([LaunchCenterID]);
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20210107020154_InitialCreate', N'3.1.10');
+
+GO
+
+ALTER TABLE [Staff] DROP CONSTRAINT [FK_Staff_LaunchCenter_LaunchCenterID];
+
+GO
+
+DROP INDEX [IX_Staff_LaunchCenterID] ON [Staff];
+
+GO
+
+DECLARE @var0 sysname;
+SELECT @var0 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[Staff]') AND [c].[name] = N'LaunchCenterID');
+IF @var0 IS NOT NULL EXEC(N'ALTER TABLE [Staff] DROP CONSTRAINT [' + @var0 + '];');
+ALTER TABLE [Staff] ALTER COLUMN [LaunchCenterID] nvarchar(max) NULL;
+
+GO
+
+ALTER TABLE [Staff] ADD [LaunchCenterID1] int NULL;
+
+GO
+
+DECLARE @var1 sysname;
+SELECT @var1 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[LaunchCenter]') AND [c].[name] = N'ID');
+IF @var1 IS NOT NULL EXEC(N'ALTER TABLE [LaunchCenter] DROP CONSTRAINT [' + @var1 + '];');
+ALTER TABLE [LaunchCenter] ALTER COLUMN [ID] int NOT NULL;
+
+GO
+
+CREATE INDEX [IX_Staff_LaunchCenterID1] ON [Staff] ([LaunchCenterID1]);
+
+GO
+
+ALTER TABLE [Staff] ADD CONSTRAINT [FK_Staff_LaunchCenter_LaunchCenterID1] FOREIGN KEY ([LaunchCenterID1]) REFERENCES [LaunchCenter] ([ID]) ON DELETE NO ACTION;
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20210107022945_change-LC-ID_Type', N'3.1.10');
+
+GO
+
+
