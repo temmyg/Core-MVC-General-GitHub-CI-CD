@@ -17,7 +17,7 @@ stages:
   - job: 'Build'
     displayName: 'Build job'
     pool:
-      vmImage: 'ubuntu-22.04'
+      vmImage: 'windows-latest'
       demands:
       - npm
 
@@ -70,3 +70,29 @@ stages:
 
     - publish: '$(Build.ArtifactStagingDirectory)'
       artifact: drop
+
+- stage: 'Dev'
+  displayName: 'Deploy to the dev environment'
+  dependsOn: Build
+  condition:  succeeded()
+  jobs:
+  - deployment: Deploy
+    pool:
+      vmImage: 'windows-latest'
+    environment: dev
+    variables:
+    - group: Release
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - download: current
+            artifact: drop
+          - task: AzureWebApp@1
+            displayName: 'Azure App Service Deploy: dev website'
+            inputs:
+              azureSubscription: 'TestCDConnection2'
+              appType: 'webApp'
+              appName: '$(WebAppNameDev)'
+              package: '$(Pipeline.Workspace)/drop/$(buildConfiguration)/*.zip'
+              deploymentMethod: 'auto'
