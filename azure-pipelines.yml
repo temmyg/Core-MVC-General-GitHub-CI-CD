@@ -22,8 +22,8 @@ stages:
       - npm
 
     variables:
-      wwwrootDir: 'Tailspin.SpaceGame.Web/wwwroot'
-      dotnetSdkVersion: '8.x'
+      wwwrootDir: 'Core-MVC-General-GitHub-CI-CD/wwwroot'
+      dotnetSdkVersion: '3.x'
 
     steps:
     - task: UseDotNet@2
@@ -36,15 +36,15 @@ stages:
       inputs:
         verbose: false
 
-    - script: './node_modules/.bin/node-sass $(wwwrootDir) --output $(wwwrootDir)'
-      displayName: 'Compile Sass assets'
+    # - script: './node_modules/.bin/node-sass $(wwwrootDir) --output $(wwwrootDir)'
+    #   displayName: 'Compile Sass assets'
 
-    - task: gulp@1
-      displayName: 'Run gulp tasks'
+    # - task: gulp@1
+    #   displayName: 'Run gulp tasks'
 
-    - script: 'echo "$(Build.DefinitionName), $(Build.BuildId), $(Build.BuildNumber)" > buildinfo.txt'
-      displayName: 'Write build info'
-      workingDirectory: $(wwwrootDir)
+    # - script: 'echo "$(Build.DefinitionName), $(Build.BuildId), $(Build.BuildNumber)" > buildinfo.txt'
+    #   displayName: 'Write build info'
+    #   workingDirectory: $(wwwrootDir)
 
     - task: DotNetCoreCLI@2
       displayName: 'Restore project dependencies'
